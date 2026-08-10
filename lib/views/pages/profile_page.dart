@@ -74,7 +74,43 @@ class _ProfilePageState extends State<ProfilePage> {
                 print(value);
               },
             ),
-            Image.asset('assets/images/bg.jpg'),
+            InkWell(
+              splashColor: Colors.teal,
+              onTap: () {
+                print('Image selected');
+              },
+              child: Container(
+                height: 50,
+                width: double.infinity,
+                color: Colors.white12,
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
+                foregroundColor: Colors.white,
+              ),
+              child: Text('Click me'),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Click me'),
+            ),
+            FilledButton(
+              onPressed: () {},
+              child: Text('Click me'),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text('Click me'),
+            ),
+            OutlinedButton(
+              onPressed: () {},
+              child: Text('Click me'),
+            ),
+            CloseButton(),
+            BackButton(),
           ],
         ),
       ),
