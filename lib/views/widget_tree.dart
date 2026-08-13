@@ -1,6 +1,6 @@
 import 'package:book_application/data/constants.dart';
 import 'package:book_application/data/notifiers.dart';
-import 'package:book_application/views/pages/home_oage.dart';
+import 'package:book_application/views/pages/home_page.dart';
 import 'package:book_application/views/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

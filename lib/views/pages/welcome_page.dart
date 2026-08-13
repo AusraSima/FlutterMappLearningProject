@@ -1,7 +1,6 @@
 import 'package:book_application/views/pages/login_page.dart';
 import 'package:book_application/views/pages/onboarding_page.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
