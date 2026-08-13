@@ -1,4 +1,4 @@
-import 'package:book_application/data/constants.dart';
+import 'package:book_application/views/widgets/container_widget.dart';
 import 'package:book_application/views/widgets/hero_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -8,29 +8,30 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20.0),
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            HeroWidget(title: 'Flutter Mapp',),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Card(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Basic Layout', style: KTextStyle.titleTealText),
-                      Text(
-                        'The description of this',
-                        style: KTextStyle.descriptionText,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            HeroWidget(title: 'Flutter Mapp'),
+            ContainerWidget(
+              title: 'Basic layout',
+              description: 'This is a descriptipn',
+            ),
+            ContainerWidget(
+              title: 'Basic layout',
+              description: 'This is a descriptipn',
+            ),
+            ContainerWidget(
+              title: 'Basic layout',
+              description: 'This is a descriptipn',
+            ),
+            ContainerWidget(
+              title: 'Basic layout',
+              description: 'This is a descriptipn',
+            ),
+            ContainerWidget(
+              title: 'Basic layout',
+              description: 'This is a descriptipn',
             ),
           ],
         ),

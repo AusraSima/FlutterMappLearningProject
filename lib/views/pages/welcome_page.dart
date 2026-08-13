@@ -16,7 +16,7 @@ class WelcomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Lottie.asset('assets/lotties/welcome.json', height: 400.0),
+                Image.asset('assets/images/bg.jpg', height: 400.0),
                 FittedBox(
                   child: Text(
                     'Flutter Mapp',
