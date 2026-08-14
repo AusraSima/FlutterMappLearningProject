@@ -91,7 +91,7 @@ class CoursePageState extends State<CoursePage> {
                     ),
                   ],
                 ),
-                secondChild: Center(child: Image.asset('assets/images/bg.jpg')),
+                secondChild: Center(child: Image.asset('assets/images/bg1.jpg')),
                 crossFadeState: isFirst
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,
