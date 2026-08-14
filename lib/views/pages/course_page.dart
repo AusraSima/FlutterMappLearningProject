@@ -1,64 +1,80 @@
-import 'package:book_application/data/classes/activity_class.dart';
-import 'package:flutter/material.dart';
-import 'package:book_application/views/widgets/hero_widget.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../../data/classes/activity_class.dart';
 
 class CoursePage extends StatefulWidget {
   const CoursePage({super.key});
 
   @override
-  State<CoursePage> createState() => _CoursePageState();
+  CoursePageState createState() => CoursePageState();
 }
 
-class _CoursePageState extends State<CoursePage> {
+class CoursePageState extends State<CoursePage> {
+  late Future<Activity>? _futureActivity;
+
   @override
   void initState() {
-    getData();
     super.initState();
+    _fetchRandomActivity();
   }
 
-  Future getData() async {
-    var url = Uri.https('bored-api.appbrewery.com', '/random');
+  void _fetchRandomActivity() {
+    setState(() {
+      _futureActivity = fetchActivity();
+    });
+  }
 
-    var response = await http.get(url);
+  Future<Activity> fetchActivity() async {
+    final response = await http.get(
+      Uri.parse('https://bored-api.appbrewery.com/random'),
+    );
     if (response.statusCode == 200) {
-      return Activity.fromJson(
-        jsonDecode(response.body) as Map<String, dynamic>,
-      );
+      return Activity.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load activity');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: FutureBuilder(
-        future: getData(),
-        builder: (context, AsyncSnapshot snapshot) {
-          Widget widget;
+      appBar: AppBar(title: Text('Random Activity Viewer')),
+      body: FutureBuilder<Activity>(
+        future: _futureActivity,
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            widget = CircularProgressIndicator();
-          }
-          if (snapshot.hasData) {
-            Activity activity = snapshot.data;
-            widget = Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    HeroWidget(title: activity.activity),
-                    Text(activity.activity),
-                  ],
-                ),
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            final activity = snapshot.data!;
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(activity.activity, style: TextStyle(fontSize: 20)),
+                  SizedBox(height: 8),
+                  Text('Type: ${activity.type}'),
+                  Text('Participants: ${activity.participants}'),
+                  Text('Price: ${activity.price}'),
+                  Text('Availability: ${activity.availability}'),
+                  Text('Accessibility: ${activity.accessibility}'),
+                  Text('Duration: ${activity.duration}'),
+                  Text('Kid-Friendly: ${activity.kidFriendly ? "Yes" : "No"}'),
+                  SizedBox(height: 16),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _fetchRandomActivity,
+                    child: Text('Fetch Another Activity'),
+                  ),
+                ],
               ),
             );
-          } else {
-            widget = Center(child: Text("Error"));
           }
-          return widget;
+          return Center(child: Text('No data available.'));
         },
       ),
     );
