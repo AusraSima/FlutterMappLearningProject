@@ -12,22 +12,20 @@ class CoursePage extends StatefulWidget {
 }
 
 class _CoursePageState extends State<CoursePage> {
-  late Activity activity;
   @override
   void initState() {
     getData();
     super.initState();
   }
 
-  void getData() async {
+  Future getData() async {
     var url = Uri.https('bored-api.appbrewery.com', '/random');
 
     var response = await http.get(url);
     if (response.statusCode == 200) {
-      activity = Activity.fromJson(
+      return Activity.fromJson(
         jsonDecode(response.body) as Map<String, dynamic>,
       );
-      print(activity.activity);
     } else {
       throw Exception('Failed to load album');
     }
@@ -37,11 +35,31 @@ class _CoursePageState extends State<CoursePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(children: [HeroWidget(title: 'Course')]),
-        ),
+      body: FutureBuilder(
+        future: getData(),
+        builder: (context, AsyncSnapshot snapshot) {
+          Widget widget;
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            widget = CircularProgressIndicator();
+          }
+          if (snapshot.hasData) {
+            Activity activity = snapshot.data;
+            widget = Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    HeroWidget(title: activity.activity),
+                    Text(activity.activity),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            widget = Center(child: Text("Error"));
+          }
+          return widget;
+        },
       ),
     );
   }
