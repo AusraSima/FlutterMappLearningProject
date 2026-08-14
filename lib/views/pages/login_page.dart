@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(20.0),
             child: LayoutBuilder(
               builder: (context, BoxConstraints constraints) {
                 return FractionallySizedBox(
