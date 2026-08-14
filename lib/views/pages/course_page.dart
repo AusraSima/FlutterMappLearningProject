@@ -12,7 +12,8 @@ class CoursePage extends StatefulWidget {
 }
 
 class CoursePageState extends State<CoursePage> {
-  late Future<Activity>? _futureActivity;
+  Future<Activity>? _futureActivity;
+  bool isFirst = true;
 
   @override
   void initState() {
@@ -40,7 +41,19 @@ class CoursePageState extends State<CoursePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Random Activity Viewer')),
+      appBar: AppBar(
+        title: Text('Random Activity Viewer'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                isFirst = !isFirst;
+              });
+            },
+            icon: Icon(Icons.switch_access_shortcut),
+          ),
+        ],
+      ),
       body: FutureBuilder<Activity>(
         future: _futureActivity,
         builder: (context, snapshot) {
@@ -52,25 +65,37 @@ class CoursePageState extends State<CoursePage> {
             final activity = snapshot.data!;
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(activity.activity, style: TextStyle(fontSize: 20)),
-                  SizedBox(height: 8),
-                  Text('Type: ${activity.type}'),
-                  Text('Participants: ${activity.participants}'),
-                  Text('Price: ${activity.price}'),
-                  Text('Availability: ${activity.availability}'),
-                  Text('Accessibility: ${activity.accessibility}'),
-                  Text('Duration: ${activity.duration}'),
-                  Text('Kid-Friendly: ${activity.kidFriendly ? "Yes" : "No"}'),
-                  SizedBox(height: 16),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _fetchRandomActivity,
-                    child: Text('Fetch Another Activity'),
-                  ),
-                ],
+              child: AnimatedCrossFade(
+                firstChild: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Activity: ${activity.activity}',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(height: 8),
+                    Text('Type: ${activity.type}'),
+                    Text('Participants: ${activity.participants}'),
+                    Text('Price: ${activity.price}'),
+                    Text('Availability: ${activity.availability}'),
+                    Text('Accessibility: ${activity.accessibility}'),
+                    Text('Duration: ${activity.duration}'),
+                    Text(
+                      'Kid-Friendly: ${activity.kidFriendly ? "Yes" : "No"}',
+                    ),
+                    SizedBox(height: 16),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: _fetchRandomActivity,
+                      child: Text('Fetch Another Activity'),
+                    ),
+                  ],
+                ),
+                secondChild: Center(child: Image.asset('assets/images/bg.jpg')),
+                crossFadeState: isFirst
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                duration: Duration(milliseconds: 1000),
               ),
             );
           }
