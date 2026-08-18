@@ -17,7 +17,16 @@ class OnBoardingPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Lottie.asset('assets/lotties/welcome.json', height: 400.0),                
+                Lottie.asset('assets/lotties/welcome.json', height: 400.0),
+                Text(
+                  'WELCOME!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                    color: Colors.teal,
+                  ),
+                ),
+                SizedBox(height: 20,),
                 Text(
                   'Flutter Mapp is the way to learn Flutte!',
                   style: KTextStyle.descriptionText,
@@ -30,7 +39,7 @@ class OnBoardingPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return LoginPage(title: 'Register',);
+                          return LoginPage(title: 'Register');
                         },
                       ),
                     );

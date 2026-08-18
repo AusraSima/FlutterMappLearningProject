@@ -40,7 +40,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Lottie.asset('assets/lotties/home.json', height: 400.0),
+                      Lottie.asset('assets/lotties/home.json', height: 300.0,),
+                      SizedBox(height: 50,),
                       TextField(
                         controller: controllerEmail,
                         decoration: InputDecoration(
